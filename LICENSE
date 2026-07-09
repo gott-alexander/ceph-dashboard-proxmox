@@ -1,0 +1,375 @@
+Advanced Open Contribution License (AOCL) Version 1.0
+
+Copyright (c) 2026 Alexander Gott
+Kontakt E-Mail: github@gott-alexander.eu
+
+1. Präambel
+
+Diese Lizenz soll eine freie Nutzung, Weitergabe und Verbesserung der Software
+ermöglichen. Jeder darf die Software unentgeltlich verwenden, kopieren und
+verändern. Als Gegenleistung müssen Verbesserungen dem ursprünglichen Entwickler
+zur Verfügung gestellt werden.
+
+2. Begriffsdefinitionen
+
+"Software" bezeichnet den gesamten Quellcode, Binärdateien, Skripte,
+Konfigurationsdateien, Dokumentationen, Beispiele, Testdateien und sonstige
+Bestandteile dieses Projekts.
+
+"Ursprünglicher Entwickler" bezeichnet den im Copyright-Vermerk genannten
+Urheber oder Rechteinhaber.
+
+"Lizenznehmer" bezeichnet jede natürliche oder juristische Person, die die
+Software nutzt, kopiert, verändert oder verbreitet.
+
+"Verbesserung" bezeichnet jede Änderung, Erweiterung, Fehlerbehebung,
+Optimierung, Sicherheitskorrektur, neue Funktion oder sonstige Modifikation der
+Software.
+
+Reine Konfigurationsanpassungen, Branding-Anpassungen, lokale
+Integrationsanpassungen sowie projektspezifische Anpassungen ohne allgemeinen
+Nutzen für die Software gelten nicht als Verbesserung im Sinne dieser Lizenz.
+
+"Hinweisgeber" bezeichnet jede natürliche oder juristische Person, die dem
+ursprünglichen Entwickler Informationen über einen tatsächlichen oder
+vermuteten Verstoß gegen diese Lizenz übermittelt.
+
+Ein Lizenznehmer gilt hinsichtlich eigener Verstöße nicht als Hinweisgeber im
+Sinne dieser Lizenz.
+
+"Projekt-Repository" bezeichnet das offizielle Repository des ursprünglichen
+Entwicklers:
+
+https://github.com/Alexander-Ger-Reich/ceph-dashboard-proxmox
+
+Der ursprüngliche Entwickler ist berechtigt, das Projekt-Repository durch ein
+neues Repository zu ersetzen oder auf ein Nachfolge-Repository zu verweisen.
+
+Ein solcher Wechsel ist insbesondere durch einen Hinweis im bisherigen
+Projekt-Repository, im Nachfolge-Repository oder durch eine neue Version dieser
+Lizenz bekanntzugeben.
+
+"Kommerzielles Umfeld" bezeichnet die Nutzung der Software im Rahmen einer
+gewerblichen, geschäftlichen oder auf wirtschaftlichen Vorteil gerichteten
+Tätigkeit.
+
+Die bloße Nutzung der Software, der Erwerb von Kenntnissen oder Fähigkeiten,
+die Verbesserung beruflicher Qualifikationen oder daraus resultierende
+persönliche Vorteile begründen allein kein kommerzielles Umfeld.
+
+3. Nutzungsrechte
+
+Jeder erhält ein weltweites, unentgeltliches, nicht ausschließliches und
+widerrufliches Recht:
+
+- die Software zu nutzen,
+- die Software auszuführen,
+- die Software zu kopieren,
+- die Software zu untersuchen,
+- die Software zu verändern,
+- die Software weiterzugeben,
+- die Software zu veröffentlichen,
+- die Software privat oder kommerziell einzusetzen.
+
+Ein Widerruf dieser Rechte durch den ursprünglichen Entwickler ist zulässig,
+wenn der Lizenznehmer schuldhaft gegen wesentliche Pflichten dieser Lizenz
+verstößt oder sein Verhalten dem Projekt, dessen Entwicklung, dessen
+Verbreitung oder den rechtlichen und wirtschaftlichen Interessen des
+ursprünglichen Entwicklers nachweislich und schwerwiegend schadet.
+
+Ein solcher Schaden kann insbesondere vorliegen, wenn der Lizenznehmer aufgrund
+geltender Sanktions-, Embargo- oder vergleichbarer Rechtsvorschriften zu
+erheblichen rechtlichen Risiken für das Projekt führt, die Software für
+rechtswidrige, schädigende oder betrügerische Zwecke einsetzt oder durch
+gezielte Falschdarstellungen den Ruf des Projekts oder des ursprünglichen
+Entwicklers erheblich beeinträchtigt.
+
+Die bloße Nutzung, Veränderung oder Weitergabe der Software im Rahmen dieser
+Lizenz stellt keinen Schaden am Projekt dar und begründet keinen Widerruf.
+
+Ein Widerruf bedarf der Schriftform und ist gegenüber dem betroffenen
+Lizenznehmer zu begründen.
+
+Ein Widerruf wird erst wirksam, wenn dem Lizenznehmer zuvor eine angemessene
+Frist zur Behebung des beanstandeten Verhaltens eingeräumt wurde, sofern der
+Verstoß nicht derart schwerwiegend ist, dass ein sofortiger Widerruf
+erforderlich ist.
+
+4. Recht zur Veränderung
+
+Jeder darf die Software verändern und an eigene Anforderungen anpassen.
+
+Veränderte Versionen dürfen intern oder extern verwendet und verteilt werden,
+sofern sämtliche Bedingungen dieser Lizenz eingehalten werden.
+
+5. Verbesserungen
+
+Alle Änderungen, Erweiterungen, Fehlerkorrekturen und sonstigen Verbesserungen
+der Software müssen dem ursprünglichen Entwickler vollständig in Quellcodeform
+zur Verfügung gestellt werden.
+
+Die Verpflichtung zur Bereitstellung entsteht spätestens mit der produktiven
+Nutzung, Veröffentlichung, Weitergabe, Verteilung oder sonstigen Verwendung
+der Verbesserung.
+
+Als produktive Nutzung gilt die Verwendung der Verbesserung für ihren
+eigentlichen Einsatzzweck außerhalb von Test-, Entwicklungs-, Evaluierungs-,
+Validierungs-, Demonstrations- oder Pilotumgebungen.
+
+Die bloße Entwicklung, lokale Ausführung, Evaluierung, Validierung oder das
+Testen einer Verbesserung begründen keine Verpflichtung zur Bereitstellung.
+
+Die Bereitstellung hat innerhalb von 14 Kalendertagen nach dem ersten
+pflichtauslösenden Ereignis zu erfolgen.
+
+Die Bereitstellung muss den vollständigen Quellcode der Änderung sowie
+vorhandene Dokumentation, Konfigurationsdateien, Build-Dateien und Tests
+umfassen.
+
+Die Verpflichtung zur Bereitstellung umfasst keine Passwörter, Schlüssel,
+Zertifikate, Zugangsdaten, personenbezogenen Daten, Geschäftsgeheimnisse oder
+sonstige vertrauliche Informationen. Solche Informationen dürfen vor der
+Bereitstellung entfernt oder durch Platzhalter ersetzt werden.
+
+Die Übermittlung der Verbesserungen hat grundsätzlich durch einen Pull Request
+im Projekt-Repository zu erfolgen.
+
+Die Verpflichtung zur Bereitstellung gilt als erfüllt, sobald der
+Lizenznehmer einen Pull Request im Projekt-Repository erstellt hat, der die
+vollständigen Änderungen enthält.
+
+Die Erfüllung der Verpflichtung hängt nicht von der Annahme, Prüfung,
+Bearbeitung oder Zusammenführung des Pull Requests durch den ursprünglichen
+Entwickler ab.
+
+Eine Übermittlung per E-Mail ist nur zulässig, wenn der ursprüngliche
+Entwickler dies zuvor ausdrücklich schriftlich genehmigt hat.
+
+Ist das Projekt-Repository dauerhaft nicht erreichbar oder wird die Erstellung
+eines Pull Requests technisch unmöglich gemacht, genügt die Übermittlung per
+E-Mail an die im Copyright-Vermerk oder in der Projektdokumentation genannte
+Adresse.
+
+Der ursprüngliche Entwickler kann weitere geeignete Übermittlungswege
+schriftlich zulassen.
+
+Ein Verstoß gegen die Verpflichtungen dieses Abschnitts stellt einen
+Lizenzverstoß im Sinne von Abschnitt 14 dar.
+
+6. Lizenzierung von Beiträgen
+
+Jeder Beitragende räumt dem ursprünglichen Entwickler sowie allen weiteren
+Empfängern der Software ein dauerhaftes, weltweites, unentgeltliches,
+unwiderrufliches und nicht ausschließliches Recht ein, die eingereichten
+Verbesserungen zu nutzen, zu verändern, zu veröffentlichen, weiterzugeben und
+in zukünftige Versionen der Software aufzunehmen.
+
+Die Einräumung der Rechte erfolgt unter den Bestimmungen dieser Lizenz.
+
+7. Weitergabe
+
+Die Software darf unverändert oder verändert weitergegeben werden.
+
+Jede Weitergabe muss enthalten:
+
+- den Copyright-Hinweis,
+- diese Lizenz in unveränderter Form,
+- einen Hinweis auf vorgenommene Änderungen.
+
+Wer eine veränderte Version der Software weitergibt oder veröffentlicht,
+muss sämtliche Änderungen ebenfalls unter dieser Lizenz bereitstellen.
+
+Den Empfängern der veränderten Version stehen hinsichtlich der Änderungen
+dieselben Rechte und Pflichten zu, die diese Lizenz für die ursprüngliche
+Software vorsieht.
+
+8. Schutz der Lizenz
+
+Der Text dieser Lizenz darf nicht verändert, gekürzt, erweitert oder durch
+eigene Bestimmungen ersetzt werden.
+
+Ausschließlich der ursprüngliche Entwickler ist berechtigt, neue Versionen,
+Änderungen oder Nachfolgeversionen dieser Lizenz zu erstellen und zu
+veröffentlichen.
+
+Dritte dürfen keine modifizierten Fassungen dieser Lizenz verbreiten und diese
+nicht als offizielle Version ausgeben.
+
+Wer die Software weitergibt, muss den vollständigen und unveränderten Text
+dieser Lizenz beifügen.
+
+9. Abweichende Vereinbarungen
+
+Der ursprüngliche Entwickler ist berechtigt, mit einzelnen Lizenznehmern
+schriftliche Vereinbarungen zu treffen, die von den Bestimmungen dieser Lizenz
+ganz oder teilweise abweichen.
+
+Solche Vereinbarungen können insbesondere zusätzliche Rechte gewähren,
+einzelne Verpflichtungen einschränken oder aufheben oder ergänzende
+Bestimmungen enthalten.
+
+Eine abweichende Vereinbarung ist nur wirksam, wenn sie schriftlich erfolgt und
+vom ursprünglichen Entwickler sowie dem betreffenden Lizenznehmer
+unterzeichnet oder anderweitig rechtsverbindlich bestätigt wurde.
+
+Eine solche Vereinbarung gilt ausschließlich für den jeweiligen
+Lizenznehmer und begründet keinerlei Ansprüche oder Rechte für andere Nutzer
+der Software.
+
+10. Vertragsstrafe
+
+Die Bestimmungen dieses Abschnitts gelten ausschließlich für Lizenznehmer, die
+die Software in einem kommerziellen Umfeld nutzen.
+
+Bei einem unbeabsichtigten Verstoß gegen diese Lizenz fällt für den Zeitraum
+keine Vertragsstrafe an, in dem der Lizenznehmer vernünftigerweise davon
+ausgehen durfte, die Bestimmungen dieser Lizenz einzuhalten.
+
+Ab dem Zeitpunkt, zu dem dem Lizenznehmer Tatsachen bekannt waren oder bekannt
+sein mussten, aus denen sich die Verletzung dieser Lizenz ergibt, gilt ein
+fortgesetzter Verstoß als fahrlässiger Verstoß.
+
+Für einen fahrlässigen Verstoß schuldet der Lizenznehmer dem ursprünglichen
+Entwickler eine Vertragsstrafe in Höhe von 200 Euro je angefangenen Zeitraum
+von sieben Kalendertagen, in dem der Verstoß andauert.
+
+Die gesamte Vertragsstrafe für einen fahrlässigen Verstoß ist auf insgesamt
+1.000 Euro pro Kalenderjahr begrenzt.
+
+Wer vorsätzlich gegen die Bestimmungen dieser Lizenz verstößt, schuldet dem
+ursprünglichen Entwickler eine Vertragsstrafe in Höhe von 2.000 Euro je
+angefangenen Zeitraum von sieben Kalendertagen, in dem der Verstoß andauert.
+
+Die gesamte Vertragsstrafe für einen vorsätzlichen Verstoß ist auf insgesamt
+10.000 Euro pro Kalenderjahr begrenzt.
+
+Der Verstoß endet mit der vollständigen Beseitigung des lizenzwidrigen
+Zustands oder der vollständigen Erfüllung der verletzten Verpflichtung.
+
+Die höhere Begrenzung bei vorsätzlichen Verstößen trägt dem Umstand Rechnung,
+dass vorsätzliche Verletzungen der Lizenz regelmäßig geeignet sind, dem Projekt,
+seiner Entwicklung, seiner Verbreitung sowie den Interessen des ursprünglichen
+Entwicklers erheblichen Schaden zuzufügen.
+
+Die Vertragsstrafe dient insbesondere dem Ausgleich des Aufwands zur
+Feststellung und Verfolgung von Lizenzverstößen sowie dem Ausgleich
+wirtschaftlicher Nachteile, die daraus entstehen können, dass der
+Lizenznehmer die Möglichkeit einer individuellen Lizenz- oder
+Ausnahmevereinbarung nach Abschnitt 9 umgeht.
+
+Der Lizenznehmer erkennt an, dass Verstöße gegen die Bestimmungen dieser
+Lizenz geeignet sind, dem ursprünglichen Entwickler wirtschaftliche Nachteile
+zu verursachen, auch wenn ein konkreter finanzieller Schaden nicht unmittelbar
+nachweisbar ist.
+
+Eine Vertragsstrafe ist unabhängig davon zu entrichten, ob dem ursprünglichen
+Entwickler ein finanzieller Schaden entstanden ist.
+
+Die Vertragsstrafe wird unabhängig von einem darüber hinausgehenden
+Schadensersatzanspruch fällig. Ein nachweisbar entstandener Schaden kann
+zusätzlich geltend gemacht werden, soweit dies gesetzlich zulässig ist.
+
+Wurde ein Verstoß gegen diese Lizenz aufgrund eines Hinweises eines oder
+mehrerer Hinweisgeber aufgedeckt, kann der ursprüngliche Entwickler den
+Hinweisgebern gemeinsam eine Belohnung in Höhe von bis zu 10 Prozent der
+tatsächlich eingegangenen Vertragsstrafe auszahlen.
+
+Eine Auszahlung erfolgt nur, sofern und soweit die Vertragsstrafe tatsächlich
+beim ursprünglichen Entwickler eingegangen ist.
+
+Die Entscheidung über die Berücksichtigung von Hinweisgebern sowie die
+Aufteilung der Belohnung liegt im pflichtgemäßen Ermessen des ursprünglichen
+Entwicklers.
+
+Eine Belohnung kann insbesondere dann versagt werden, wenn der Hinweis keinen
+wesentlichen Beitrag zur Aufdeckung des Verstoßes geleistet hat oder lediglich
+geringfügige oder rein formale Verstöße betrifft.
+
+Ist der Hinweisgeber zugleich der Lizenznehmer, gegen den sich der gemeldete
+Verstoß richtet, besteht kein Anspruch auf eine Belohnung.
+
+Ein Rechtsanspruch auf eine Belohnung besteht nicht.
+
+Der ursprüngliche Entwickler ist berechtigt, Identität und Angaben von
+Hinweisgebern vertraulich zu behandeln, soweit dem keine zwingenden
+gesetzlichen Vorschriften entgegenstehen.
+
+Jeder Hinweisgeber ist berechtigt, ganz oder teilweise auf eine gewährte
+Belohnung zu verzichten.
+
+Ein Verzicht ist nur wirksam, wenn er ausdrücklich und schriftlich erklärt
+wurde.
+
+Der ursprüngliche Entwickler ist jederzeit berechtigt, ganz oder teilweise auf
+die Vertragsstrafe zu verzichten.
+
+Ein Verzicht auf die Vertragsstrafe ist nur wirksam, wenn er ausdrücklich und
+schriftlich durch den ursprünglichen Entwickler erklärt wurde.
+
+11. Namens- und Markenrechte
+
+Diese Lizenz gewährt keine Rechte an Marken, Logos, Firmennamen oder
+Produktbezeichnungen des ursprünglichen Entwicklers.
+
+12. Gewährleistungsausschluss
+
+Die Software wird ohne jede ausdrückliche oder stillschweigende Gewährleistung
+bereitgestellt.
+
+Insbesondere wird keine Gewähr übernommen für:
+
+- Fehlerfreiheit,
+- Sicherheit,
+- Verfügbarkeit,
+- Eignung für einen bestimmten Zweck,
+- Nichtverletzung von Rechten Dritter.
+
+Die Nutzung erfolgt ausschließlich auf eigenes Risiko.
+
+13. Haftungsbeschränkung
+
+Soweit gesetzlich zulässig, ist die Haftung des ursprünglichen Entwicklers und
+aller Beitragenden ausgeschlossen.
+
+Soweit ein Haftungsausschluss gesetzlich nicht zulässig ist, ist die Haftung
+auf das gesetzlich zwingend vorgeschriebene Mindestmaß beschränkt.
+
+Die vorstehenden Beschränkungen gelten insbesondere für Schäden durch
+Datenverlust, Betriebsunterbrechungen, Gewinnverlust oder Fehlfunktionen der
+Software.
+
+14. Lizenzverletzung
+
+Bei Verstoß gegen die wesentlichen Pflichten dieser Lizenz, insbesondere gegen
+die Verpflichtungen aus Abschnitt 5 oder Abschnitt 7, erlöschen sämtliche durch
+diese Lizenz gewährten Rechte automatisch.
+
+Die Rechte leben automatisch wieder auf, sobald:
+
+- der Verstoß vollständig behoben wurde und
+- alle ausstehenden Verpflichtungen aus dieser Lizenz vollständig erfüllt
+  wurden.
+
+Die Wiederherstellung der Rechte berührt bereits entstandene Ansprüche auf
+Vertragsstrafen gemäß Abschnitt 10 nicht.
+
+15. Salvatorische Klausel
+
+Sollte eine Bestimmung dieser Lizenz unwirksam oder nicht durchsetzbar sein,
+bleiben die übrigen Bestimmungen unberührt.
+
+An die Stelle der unwirksamen Bestimmung tritt eine rechtlich zulässige
+Bestimmung, die dem wirtschaftlichen Zweck möglichst nahekommt.
+
+16. Anwendbares Recht
+
+Diese Lizenz unterliegt dem Recht der Republik Österreich.
+
+Gerichtsstand ist, soweit gesetzlich zulässig, Wien, Österreich.
+
+17. Schlussbestimmung
+
+Die Nutzung, Veränderung, Verteilung oder sonstige Verwendung der Software gilt
+als Zustimmung zu allen Bestimmungen dieser Lizenz.
+
+Ende der Advanced Open Contribution License (AOCL) Version 1.0

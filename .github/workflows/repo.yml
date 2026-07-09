@@ -1,0 +1,471 @@
+# Copyright (c) 2026 Alexander Gott
+name: Release & Pages Deploy
+
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+env:
+  PACKAGE_NAME: cephprox
+  VERSION_NUMMER: "1.0.0"
+  MAINTAINER: "Alexander Gott <github@gott-alexander.eu>"
+
+# Berechtigungen für GitHub Pages und Releases
+permissions:
+  contents: write # Für das Erstellen von Releases
+  pages: write    # Für Pages Deployment
+  id-token: write # Für Pages Deployment
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Install tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y dpkg-dev fakeroot curl jq gnupg
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v6
+
+      - name: Set version info
+        id: vars
+        run: |
+          COMMIT=$(git rev-parse --short HEAD)
+          TIMESTAMP=$(date +%s)
+          VERSION="${{ env.VERSION_NUMMER }}+${TIMESTAMP}"
+          RELEASE_TAG="build-${COMMIT}"
+          
+          echo "timestamp=${TIMESTAMP}" >> $GITHUB_OUTPUT
+          echo "commit=${COMMIT}" >> $GITHUB_OUTPUT
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          echo "release=${RELEASE_TAG}" >> $GITHUB_OUTPUT
+
+      - name: Build .deb
+        env:
+          VERSION: ${{ steps.vars.outputs.version }}
+        run: |
+          BUILD_DIR="build_root"
+          DEST_DIR="${BUILD_DIR}/usr/share/ceph/mgr/proxmox"
+          DOC_DIR="${BUILD_DIR}/usr/share/doc/${{ env.PACKAGE_NAME }}"
+          
+          mkdir -p ${BUILD_DIR}/DEBIAN ${DEST_DIR} ${BUILD_DIR}/etc/systemd/system/ceph-mgr@.service.d/ ${DOC_DIR}
+          
+          cp proxmox/module.py ${DEST_DIR}/
+          cp proxmox/__init__.py ${DEST_DIR}/
+          cp override/mgr ${BUILD_DIR}/etc/systemd/system/ceph-mgr@.service.d/override.conf
+          cp scripts/patch-dashboard.sh ${DEST_DIR}/
+          chmod +x ${DEST_DIR}/patch-dashboard.sh
+          
+          # LICENSE in das Paket kopieren
+          cp LICENSE ${DOC_DIR}/LICENSE
+          
+          # Control-Datei erstellen
+          cat > ${BUILD_DIR}/DEBIAN/control <<EOF
+          Package: ${{ env.PACKAGE_NAME }}
+          Version: ${VERSION}
+          Section: admin
+          Priority: optional
+          Architecture: all
+          Maintainer: ${{ env.MAINTAINER }}
+          Depends: prometheus, prometheus-alertmanager, ceph-mgr-dashboard, python3-xmltodict, python3-grpcio
+          Description: Proxmox Ceph Manager Module
+           Enthält das custom Proxmox Ceph MGR Modul.
+          EOF
+          
+          # Script (läuft als root, kein sudo nötig)
+          # VOR der Installation
+          cat > ${BUILD_DIR}/DEBIAN/postinst <<'POSTINST'
+          #!/bin/bash
+          set -e
+          
+          # ==========================================
+          # LICENSE AGREEMENT
+          # ==========================================
+          if [ "$1" = "configure" ]; then
+            LICENSE_FILE="/usr/share/doc/cephprox/LICENSE"
+            if [ -f "$LICENSE_FILE" ]; then
+              if [ "$DEBIAN_FRONTEND" != "noninteractive" ]; then
+                  echo "========================================================="
+                  cat "$LICENSE_FILE"
+                  echo "========================================================="
+                  read -p "Do you accept the license agreement? [y/N] " response
+                  if [ "$response" != "y" ] && [ "$response" != "Y" ]; then
+                      echo "License not accepted. Installation aborted."
+                      exit 1
+                  fi
+              else
+                  echo "Warning: Non-interactive mode detected. Assuming license acceptance."
+              fi
+            fi
+          fi
+          
+          # ==========================================
+          # WORKAROUND: SMB-Modul dauerhaft blockieren
+          # ==========================================
+          SMB_CTRL="/usr/share/ceph/mgr/dashboard/controllers/smb.py"
+          if [ -f "$SMB_CTRL" ]; then
+            dpkg-divert --add --rename --divert "${SMB_CTRL}.distrib" "$SMB_CTRL"
+          else
+            dpkg-divert --add --no-rename --divert "${SMB_CTRL}.distrib" "$SMB_CTRL"
+          fi
+          
+          # ==========================================
+          # LOGIK FÜR DEN DPKG-TRIGGER (Nach Ceph-Updates)
+          # ==========================================
+          if [ "$1" = "triggered" ]; then
+            SMB_CTRL="/usr/share/ceph/mgr/dashboard/controllers/smb.py"
+            if [ -f "$SMB_CTRL" ]; then
+              mv "$SMB_CTRL" "${SMB_CTRL}.bak"
+              systemctl daemon-reload
+              systemctl restart ceph-mgr*
+            fi
+            exit 0
+          fi
+
+          # ==========================================
+          # WORKAROUND 2: Frontend JS patchen (cephadm -> proxmox)
+          # ==========================================
+          cat > /etc/apt/apt.conf.d/99patch-ceph-dashboard <<'APTHOOK'
+          DPkg::Post-Invoke { "if [ -x /usr/share/ceph/mgr/proxmox/patch-dashboard.sh ]; then /usr/share/ceph/mgr/proxmox/patch-dashboard.sh; fi"; };
+          APTHOOK
+          
+          /usr/share/ceph/mgr/proxmox/patch-dashboard.sh
+          
+          # ==========================================
+          # NORMALE INSTALLATIONS-LOGIK
+          # ==========================================
+          if ! grep -q "job_name: 'ceph'" /etc/prometheus/prometheus.yml; then
+            cat >> /etc/prometheus/prometheus.yml <<PROMCONF
+            - job_name: 'ceph'
+              static_configs:
+                - targets: ['127.0.0.1:9283']
+          PROMCONF
+          fi
+
+          FILE="/usr/share/ceph/mgr/orchestrator/module.py"
+          if ! grep -q "'proxmox'" "$FILE"; then
+            sed -i.bak -E "s/enum_allowed\s*=\s*\['cephadm',\s*'rook',\s*'test_orchestrator'\],/enum_allowed=['cephadm', 'rook', 'test_orchestrator', 'proxmox'],/" "$FILE"
+          fi
+
+          SMB_CTRL="/usr/share/ceph/mgr/dashboard/controllers/smb.py"
+          if [ -f "$SMB_CTRL" ]; then
+            mv "$SMB_CTRL" "${SMB_CTRL}.bak"
+          fi
+          
+          systemctl daemon-reload
+          systemctl reset-failed ceph-mgr*
+          systemctl restart prometheus
+          systemctl restart ceph-mgr*
+          
+          ceph mgr module enable dashboard || true
+          ceph mgr module enable prometheus || true
+          ceph mgr module enable alerts || true
+          ceph mgr module enable proxmox || true
+          ceph dashboard set-prometheus-api-host 'http://127.0.0.1:9090' || true
+          ceph dashboard set-alertmanager-api-host 'http://127.0.0.1:9093' || true
+          ceph orch set backend proxmox || true
+          POSTINST
+          
+          # VOR der Deinstallation
+          cat > ${BUILD_DIR}/DEBIAN/prerm <<'PRERM'
+          #!/bin/bash
+          set -e
+          ceph orch set backend ''
+          ceph dashboard set-prometheus-api-host ''
+          ceph dashboard set-alertmanager-api-host ''
+          ceph mgr module disable proxmox
+          ceph mgr module disable dashboard
+          ceph mgr module disable prometheus
+          ceph mgr module disable alerts
+          PRERM
+          
+          # NACH der Deinstallation
+          cat > ${BUILD_DIR}/DEBIAN/postrm <<'POSTRM'
+          #!/bin/bash
+          set -e
+
+          if [ "$1" = "remove" ] || [ "$1" = "purge" ]; then
+              if [ -d "/usr/share/ceph/mgr/dashboard/frontend/dist" ]; then
+                  find "/usr/share/ceph/mgr/dashboard/frontend/dist" -type f -name "main.*.js" -exec sed -i 's/"tc_submenuitem","d-none","tc_submenuitem_block_nvme"/"tc_submenuitem","tc_submenuitem_block_nvme"/g' {} +
+              fi
+              
+              SMB_CTRL="/usr/share/ceph/mgr/dashboard/controllers/smb.py"
+              if dpkg-divert --list | grep -q "$SMB_CTRL"; then
+                dpkg-divert --rename --remove "$SMB_CTRL"
+              fi
+              
+              rm -f /etc/apt/apt.conf.d/99patch-ceph-dashboard
+              rm -f /etc/systemd/system/ceph-mgr@.service.d/override.conf
+          fi
+          
+          systemctl daemon-reload
+          systemctl reset-failed ceph-mgr*
+          systemctl restart ceph-mgr*
+          POSTRM
+
+          chmod +x ${BUILD_DIR}/DEBIAN/postrm
+          chmod +x ${BUILD_DIR}/DEBIAN/postinst
+          chmod +x ${BUILD_DIR}/DEBIAN/prerm
+
+          # Paket bauen
+          mkdir -p dist
+          fakeroot dpkg-deb --build ${BUILD_DIR} dist/${{ env.PACKAGE_NAME }}_${VERSION}_all.deb
+
+      # --- 1. COMMIT RELEASE ---
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v3
+        with:
+          tag_name: ${{ steps.vars.outputs.release }}
+          name: "Ceph Dashboard Proxmox Orch Build ${{ steps.vars.outputs.version }}"
+          body: "Build aus Commit ${{ steps.vars.outputs.version }}"
+          draft: false
+          prerelease: false
+          files: dist/${{ env.PACKAGE_NAME }}_${{ steps.vars.outputs.version }}_all.deb
+      
+      # --- 2. APT REPOSITORY FÜR GITHUB PAGES VORBEREITEN ---
+      - name: Setup APT Repo structure
+        env:
+          GPG_KEY_ID: ${{ vars.GPG_KEY_ID }}
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+          VERSION: ${{ steps.vars.outputs.version }}
+          FILENAME: ${{ env.PACKAGE_NAME }}_${{ steps.vars.outputs.version }}_all.deb
+          PAGES_URL: ${{ steps.vars.outputs.pages_url }}
+        run: |
+          # Da configure-pages in einem früheren Step lief, können wir die Base URL generisch zusammenbauen
+          PAGES_URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}"
+          
+          mkdir -p apt-repo/pool/main/${{ env.PACKAGE_NAME }}
+          mkdir -p apt-repo/dists/proxmox/main/binary-amd64
+          
+          # .deb Datei in den Pool kopieren
+          cp dist/$FILENAME apt-repo/pool/main/${{ env.PACKAGE_NAME }}/
+          
+          # Metadaten generieren
+          cd apt-repo
+          dpkg-scanpackages --arch amd64 --multiversion pool/ > dists/proxmox/main/binary-amd64/Packages
+          gzip -k -f dists/proxmox/main/binary-amd64/Packages
+          
+          PKG_REL_PATH="main/binary-amd64/Packages"
+          PKG_GZ_REL_PATH="main/binary-amd64/Packages.gz"
+          
+          PKG_FILE="dists/proxmox/$PKG_REL_PATH"
+          PKG_GZ_FILE="dists/proxmox/$PKG_GZ_REL_PATH"
+          
+          PKG_SIZE=$(stat -c%s "$PKG_FILE")
+          PKG_SHA256=$(sha256sum "$PKG_FILE" | cut -d' ' -f1)
+          PKG_GZ_SIZE=$(stat -c%s "$PKG_GZ_FILE")
+          PKG_GZ_SHA256=$(sha256sum "$PKG_GZ_FILE" | cut -d' ' -f1)
+          
+          # Release-Datei generieren
+          cat > dists/proxmox/Release <<EOF
+          Origin: Gott Alexander
+          Label: ${{ env.PACKAGE_NAME }}
+          Suite: proxmox
+          Codename: proxmox
+          Date: $(date -u +%a,\ %d\ %b\ %Y\ %H:%M:%S\ %Z)
+          Architectures: amd64
+          Components: main
+          Description: Custom Proxmox Ceph MGR Repo
+          SHA256:
+           $PKG_SHA256 $PKG_SIZE $PKG_REL_PATH
+           $PKG_GZ_SHA256 $PKG_GZ_SIZE $PKG_GZ_REL_PATH
+          EOF
+          
+          # GPG Signierung
+          echo "${GPG_PRIVATE_KEY}" | gpg --batch --import
+          
+          gpg --batch --yes --pinentry-mode loopback \
+            --default-key "${GPG_KEY_ID}" \
+            --detach-sign -o dists/proxmox/Release.gpg dists/proxmox/Release
+          
+          gpg --batch --yes --pinentry-mode loopback \
+            --default-key "${GPG_KEY_ID}" \
+            --clearsign -o dists/proxmox/InRelease dists/proxmox/Release
+          
+          # Öffentlichen Schlüssel exportieren
+          gpg --batch --export "${GPG_KEY_ID}" | tee apt-repo-public.key > ../apt-repo-public.key
+          
+          cd ..
+          
+          cp GPG/apt-repo-gott.gpg apt-repo/
+          
+          cat > apt-repo/index.html <<EOF
+          <!DOCTYPE html>
+          <html lang="de">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>Ceph Dashboard für Proxmox VE</title>
+              <style>
+                  body {
+                      font-family: Arial, sans-serif;
+                      max-width: 1000px;
+                      margin: 40px auto;
+                      padding: 20px;
+                      line-height: 1.6;
+                      color: #333;
+                  }
+          
+                  h1, h2, h3 {
+                      color: #005a9c;
+                  }
+          
+                  pre {
+                      background: #f4f4f4;
+                      border: 1px solid #ddd;
+                      padding: 15px;
+                      overflow-x: auto;
+                      border-radius: 6px;
+                  }
+          
+                  code {
+                      font-family: Consolas, Monaco, monospace;
+                  }
+          
+                  ul {
+                      padding-left: 25px;
+                  }
+          
+                  .notice {
+                      background: #eef7ff;
+                      border-left: 4px solid #005a9c;
+                      padding: 10px;
+                      margin: 20px 0;
+                  }
+              </style>
+          </head>
+          <body>
+          
+          <h1>Ceph Dashboard für Proxmox VE</h1>
+          
+          <p>
+              Ceph Dashboard für Proxmox VE bringt das <strong>offizielle Ceph Dashboard</strong> in die Proxmox-Welt.
+              Anstatt eine alternative Verwaltungsoberfläche bereitzustellen, sorgt dieses Projekt dafür,
+              dass die von Ceph entwickelte und unterstützte Dashboard-Lösung vollständig mit Proxmox VE
+              zusammenarbeitet.
+          </p>
+          
+          <p>
+              Das Projekt stellt die notwendige Integration zwischen Proxmox VE und den Ceph
+              Management-Komponenten bereit und ermöglicht Administratoren den direkten Zugriff auf die
+              Funktionen des nativen Ceph Dashboards innerhalb ihrer Proxmox-basierten Infrastruktur.
+          </p>
+          
+          <h2>Features</h2>
+          
+          <ul>
+              <li>Nutzung des offiziellen Ceph Dashboards</li>
+              <li>Nahtlose Integration in Proxmox VE</li>
+              <li>Direkter Zugriff auf Cluster-Management, Monitoring und Performance-Daten</li>
+              <li>Anzeige von OSDs, MONs, MGRs, Pools, PGs, RBDs und CephFS</li>
+              <li>Unterstützung aktueller Ceph- und Proxmox-Versionen</li>
+              <li>Keine proprietären Erweiterungen oder Ersatz-Dashboards</li>
+              <li>Open-Source und Community-getrieben</li>
+          </ul>
+          
+          <h2>Warum?</h2>
+          
+          <p>
+              Proxmox VE bietet eine hervorragende Integration für Ceph Storage. Bestimmte Funktionen des
+              offiziellen Ceph Dashboards sind jedoch nicht direkt innerhalb von Proxmox verfügbar.
+              Dieses Projekt schließt diese Lücke und ermöglicht die Nutzung des vollständigen
+              Ceph Dashboard Funktionsumfangs in einer Proxmox-Umgebung.
+          </p>
+          
+          <h2>FAQ</h2>
+          
+          <div class="notice">
+              Es gibt eigentlich noch keine Fragen, aber ...
+          </div>
+          
+          <ul>
+              <li>Funktionieren alle Funktionen? Nein. Jeder ist herzlich eingeladen, die fehlenden Funktionen hinzuzufügen.</li>
+              <li>Wurden KI eingesetzt? Ja.</li>
+              <li>Ersetzt dieses Projekt die Ceph- oder Proxmox-Weboberfläche? Nein. Es ergänzt die bestehenden Komponenten und verbessert die Zusammenarbeit zwischen Ceph Dashboard und Proxmox VE.</li>
+              <li>Welche Ceph-Versionen werden unterstützt? Grundsätzlich werden aktuelle Ceph-Releases unterstützt.</li>
+          </ul>
+          
+          <h2>Installation</h2>
+          
+          <h3>1. Keyring-Verzeichnis erstellen</h3>
+          
+          <pre><code>mkdir -p /etc/apt/keyrings</code></pre>
+          
+          <h3>2. Repository-Schlüssel herunterladen</h3>
+          
+          <pre><code>curl -fsSL https://gott-alexander.github.io/ceph-dashboard-proxmox/apt-repo-gott.gpg \
+            -o /etc/apt/keyrings/apt-repo-gott.gpg</code></pre>
+          
+          <h3>3. Repository hinzufügen</h3>
+          
+          <pre><code>cat &gt;/etc/apt/sources.list.d/${{ env.PACKAGE_NAME }}.sources &lt;&lt;EOF
+          Types: deb
+          URIs: https://gott-alexander.github.io/ceph-dashboard-proxmox/
+          Suites: proxmox
+          Components: main
+          Signed-By: /etc/apt/keyrings/apt-repo-gott.gpg
+          Enabled: true
+          EOF</code></pre>
+          
+          <h3>4. Paketlisten aktualisieren</h3>
+          
+          <pre><code>apt update</code></pre>
+          
+          <h3>5. Paket installieren</h3>
+          
+          <pre><code>apt install cephprox</code></pre>
+          
+          <h2>Ceph-Konfiguration</h2>
+          
+          <p>Konfiguration des Proxmox-Zugangs für das Ceph Dashboard:</p>
+          
+          <pre><code>ceph config set mgr mgr/proxmox/pve_api_url 'https://&lt;PROXMOX URL&gt;/api2/json'
+          ceph config set mgr mgr/proxmox/pve_api_token_id 'root@pam!dashbord'
+          ceph config set mgr mgr/proxmox/pve_api_token_secret '&lt;PROXMOX-API-SECRET&gt;'
+          ceph config set mgr mgr/proxmox/pve_api_verify_ssl False
+          ceph config set mgr mgr/proxmox/pve_api_timeout 30</code></pre>
+          
+          <h2>Voraussetzungen</h2>
+          
+          <ul>
+              <li>Proxmox VE</li>
+              <li>Ceph Cluster mit aktivem <code>mgr</code>-Dienst</li>
+              <li>Proxmox API Token mit ausreichenden Berechtigungen</li>
+          </ul>
+          
+          <h2>Lizenz</h2>
+          
+          <p>
+              Dieses Projekt steht unter einer eigenen Lizenz mit dem Namen
+              <strong>Advanced Open Contribution License</strong>.
+          </p>
+          
+          </body>
+          </html>
+          EOF
+
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: ./apt-repo
+
+  # --- 3. GITHUB PAGES DEPLOYMENT ---
+  deploy-pages:
+    needs: build-and-release
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

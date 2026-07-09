@@ -1,0 +1,10 @@
+# Copyright (c) 2026 Alexander Gott
+#[Service]
+#ExecStart=
+#ExecStart=/usr/bin/ceph-mgr -f --id %i --setuser ceph --setgroup www-data
+[Service]
+ExecStart=
+User=ceph
+Group=ceph
+SupplementaryGroups=www-data
+ExecStart=/usr/bin/ceph-mgr -f --id %i
