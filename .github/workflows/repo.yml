@@ -7,7 +7,7 @@ on:
 
 env:
   PACKAGE_NAME: cephprox
-  VERSION_NUMMER: "1.0.0"
+  VERSION_NUMMER: "1.0.1"
   MAINTAINER: "Alexander Gott <github@gott-alexander.eu>"
 
 # Berechtigungen für GitHub Pages und Releases
@@ -40,6 +40,7 @@ jobs:
         id: vars
         run: |
           COMMIT=$(git rev-parse --short HEAD)
+          COMMIT_MESSAGE=$(git log -1 --pretty=%B)
           TIMESTAMP=$(date +%s)
           VERSION="${{ env.VERSION_NUMMER }}+${TIMESTAMP}"
           RELEASE_TAG="build-${COMMIT}"
@@ -48,6 +49,7 @@ jobs:
           echo "commit=${COMMIT}" >> $GITHUB_OUTPUT
           echo "version=${VERSION}" >> $GITHUB_OUTPUT
           echo "release=${RELEASE_TAG}" >> $GITHUB_OUTPUT
+          echo "commit_message=${COMMIT_MESSAGE}" >> $GITHUB_OUTPUT
 
       - name: Build .deb
         env:
@@ -227,7 +229,12 @@ jobs:
         with:
           tag_name: ${{ steps.vars.outputs.release }}
           name: "Ceph Dashboard Proxmox Orch Build ${{ steps.vars.outputs.version }}"
-          body: "Build aus Commit ${{ steps.vars.outputs.version }}"
+          body: |
+            Commit Message:
+            ${{ steps.vars.outputs.commit_message }}
+            Version: ${{ steps.vars.outputs.version }}
+            Commit: ${{ steps.vars.outputs.commit }}
+            Build aus Commit ${{ steps.vars.outputs.version }}
           draft: false
           prerelease: false
           files: dist/${{ env.PACKAGE_NAME }}_${{ steps.vars.outputs.version }}_all.deb
