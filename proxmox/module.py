@@ -9,8 +9,11 @@ from ceph.deployment.service_spec import ServiceSpec, PlacementSpec
 from mgr_module import MgrModule
 import orchestrator
 from ceph.deployment import inventory
+from .cli import ProxmoxCLICommand
 
 class ProxmoxOrchestrator(MgrModule, orchestrator.Orchestrator):
+    CLICommand = ProxmoxCLICommand
+    
     """
     Proxmox VE Orchestrator module for Ceph.
     Integrates PVE host and disk management into the Ceph Dashboard.

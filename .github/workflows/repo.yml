@@ -60,6 +60,7 @@ jobs:
           mkdir -p ${BUILD_DIR}/DEBIAN ${DEST_DIR} ${BUILD_DIR}/etc/systemd/system/ceph-mgr@.service.d/ ${DOC_DIR}
           
           cp proxmox/module.py ${DEST_DIR}/
+          cp proxmox/cli.py ${DEST_DIR}/
           cp proxmox/__init__.py ${DEST_DIR}/
           cp override/mgr ${BUILD_DIR}/etc/systemd/system/ceph-mgr@.service.d/override.conf
           cp scripts/patch-dashboard.sh ${DEST_DIR}/
