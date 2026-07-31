@@ -44,13 +44,18 @@ jobs:
           TIMESTAMP=$(date +%s)
           VERSION="${{ env.VERSION_NUMMER }}+${TIMESTAMP}"
           RELEASE_TAG="build-${COMMIT}"
+      
+          echo "timestamp=${TIMESTAMP}" >> "$GITHUB_OUTPUT"
+          echo "commit=${COMMIT}" >> "$GITHUB_OUTPUT"
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "release=${RELEASE_TAG}" >> "$GITHUB_OUTPUT"
+      
+          {
+            echo "commit_message<<EOF"
+            echo "$COMMIT_MESSAGE"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
           
-          echo "timestamp=${TIMESTAMP}" >> $GITHUB_OUTPUT
-          echo "commit=${COMMIT}" >> $GITHUB_OUTPUT
-          echo "version=${VERSION}" >> $GITHUB_OUTPUT
-          echo "release=${RELEASE_TAG}" >> $GITHUB_OUTPUT
-          echo "commit_message=${COMMIT_MESSAGE}" >> $GITHUB_OUTPUT
-
       - name: Build .deb
         env:
           VERSION: ${{ steps.vars.outputs.version }}
