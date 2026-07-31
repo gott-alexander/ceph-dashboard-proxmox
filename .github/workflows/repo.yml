@@ -239,7 +239,6 @@ jobs:
             ${{ steps.vars.outputs.commit_message }}
             Version: ${{ steps.vars.outputs.version }}
             Commit: ${{ steps.vars.outputs.commit }}
-            Build aus Commit ${{ steps.vars.outputs.version }}
           draft: false
           prerelease: false
           files: dist/${{ env.PACKAGE_NAME }}_${{ steps.vars.outputs.version }}_all.deb
