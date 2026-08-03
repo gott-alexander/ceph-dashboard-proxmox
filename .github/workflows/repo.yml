@@ -43,7 +43,7 @@ jobs:
           COMMIT_MESSAGE=$(git log -1 --pretty=%B)
           TIMESTAMP=$(date +%s)
           VERSION="${{ env.VERSION_NUMMER }}+${TIMESTAMP}"
-          RELEASE_TAG="build-${COMMIT}"
+          RELEASE_TAG="build-${VERSION}"
       
           echo "timestamp=${TIMESTAMP}" >> "$GITHUB_OUTPUT"
           echo "commit=${COMMIT}" >> "$GITHUB_OUTPUT"
