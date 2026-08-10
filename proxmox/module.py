@@ -1439,8 +1439,8 @@ class ProxmoxOrchestrator(MgrModule, orchestrator.Orchestrator):
     def cert_store_cert_ls(self,filter_by: str = '',show_details: bool = False,include_cephadm_signed: bool = False): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
     def cert_store_get_cert(self,cert_name: str,service_name: Optional[str] = None,hostname: Optional[str] = None,no_exception_when_missing: bool = False): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
     def replace_device(self,hostname: str,device: str,clear: bool = False,yes_i_really_mean_it: bool = False): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
-    def inner(func: Callable): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
 
+    def inner(func): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
     def _preview_osdspecs(self,  osdspecs): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
     def get_first_matching_network_ip(self,host: str,sspec,sspec_networks: Optional[List[str]] = None): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
     def get_unique_name(self,daemon_type: str,host: str,existing,prefix: Optional[str] = None,forcename: Optional[str] = None,rank: Optional[int] = None,rank_generation: Optional[int] = None): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
