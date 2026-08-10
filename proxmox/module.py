@@ -1361,7 +1361,9 @@ class ProxmoxOrchestrator(MgrModule, orchestrator.Orchestrator):
     def _set_pub_key(self, inbuf: Optional[str] = None): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
     def _as_datetime(value: Optional[str]): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
     def registry_login(self, url: Optional[str] = None, username: Optional[str] = None, password: Optional[str] = None, inbuf: Optional[str] = None): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
-    def wait_async(self, coro: Awaitable[T], timeout: Optional[int] = None): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")            self.log.info(f'Found default timeout set to {timeout}. Instead trying minimum of 60.')    def update_host_timeout_error(self, host: str, remove: bool = False) -> None:    def async_timeout_handler(self, host: Optional[str] = '',
+    def wait_async(self, coro: Awaitable[T], timeout: Optional[int] = None): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def update_host_timeout_error(self, host: str, remove: bool = False): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def async_timeout_handler(self, host: Optional[str] = '',cmd: Optional[str] = '',timeout: Optional[int] = None): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
     def cert_store_rm_cert(self,cert_name: str,service_name: Optional[str] = None,hostname: Optional[str] = None): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
     def cert_store_rm_key(self,key_name: str,service_name: Optional[str] = None,hostname: Optional[str] = None): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
     def _prepare_host_for_sudo_hardening(self,host: str,cephadm_args: List[str],addr: Optional[str] = None): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
