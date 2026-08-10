@@ -1098,3 +1098,217 @@ class ProxmoxOrchestrator(MgrModule, orchestrator.Orchestrator):
     def apply_crash(self, spec): raise orchestrator.OrchestratorError("Proxmox: Not supported")
     def apply_container(self, spec): raise orchestrator.OrchestratorError("Proxmox: Not supported")
     def apply_snmp_gateway(self, spec): raise orchestrator.OrchestratorError("Proxmox: Not supported")
+
+    def os_exit_noop(status: int): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def host_exists(hostname_position: int = 1): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def shutdown(self): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def get_fqdn(self, hostname: str): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def _get_mgr_ips(self): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def _get_security_config(self): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def get_mgmt_gw_external_endpoint(self): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def _get_cephadm_binary_path(self): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def _trigger_osd_removal(self): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def pause(self): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def validate_ssh_config_fname(self, ssh_config_fname: str): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def _process_ls_output(self, host: str, ls: List[Dict[str, Any]]): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def _generate_key(self): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def _get_pub_key(self): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def set_ssh_user(self, user: str, skip_pre_steps: bool = False): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def _get_extra_ceph_conf(self): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def _update_config_check(self, check_name: str, status: str): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def extra_ceph_conf(self): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def _osd_activate(self, host: List[str]): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def _get_cephadm_version_for_host_prep(self): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def _prepare_new_host_for_sudo_hardening(self, hostname: str, addr: str): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def hardware_powercycle(self, hostname: str, yes_i_really_mean_it: bool = False): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def _host_ok_to_stop(self, hostname: str, force: bool = False): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def update_maintenance_healthcheck(self): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def perform_service_action(self, action: str, service_name: str): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def daemon_is_self(self, daemon_type: str, daemon_id: str): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def get_active_mgr(self): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def get_active_mgr_digests(self): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def _schedule_daemon_action(self, daemon_name: str, action: str): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def _check_pool_exists(self, pool: str, service_name: str): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def _get_alertmanager_credentials(self): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def generate_certificates(self, module_name: str): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def set_prometheus_access_info(self, user: str, password: str): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def remove_prometheus_remote_write(self, url: str): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def cert_store_bindings_ls(self): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def cert_store_cert_check(self): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def rm_tuned_profile(self, profile_name: str): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def tuned_profile_ls(self): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def tuned_profile_rm_setting(self, profile_name: str, setting: str): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def set_health_error(self, name: str, summary: str, count: int, detail: List[str]): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def remove_health_warning(self, name: str): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def _get_dashboard_url(self): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def stop_remove_osds(self, osd_ids: List[str]): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def set_osd_spec(self, service_name: str, osd_ids: List[str]): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def drain_host(self, hostname: str, force: bool = False, keep_conf_keyring: bool = False, zap_osd_devices: bool = False): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def tuned_profile_add_settings(self, profile_name: str, settings: dict): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def run_cmd(cmd_args: dict): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def node_proxy_fullreport(self, hostname: Optional[str] = None): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def hardware_shutdown(self, hostname: str, force: Optional[bool] = False, yes_i_really_mean_it: bool = False): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def _daemon_action_set_image(self, action: str, image: Optional[str], daemon_type: str, daemon_id: str): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def check_host(self, host: str, addr: Optional[str] = None): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def _prepare_host(self, host: str, addr: Optional[str] = None): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def _set_extra_ceph_conf(self, inbuf: Optional[str] = None): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def _set_pub_key(self, inbuf: Optional[str] = None): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def _as_datetime(value: Optional[str]): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def registry_login(self, url: Optional[str] = None, username: Optional[str] = None, password: Optional[str] = None, inbuf: Optional[str] = None): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def wait_async(self, coro: Awaitable[T], timeout: Optional[int] = None): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")            self.log.info(f'Found default timeout set to {timeout}. Instead trying minimum of 60.')    def update_host_timeout_error(self, host: str, remove: bool = False) -> None:    def async_timeout_handler(self, host: Optional[str] = '',
+    def cert_store_rm_cert(self,cert_name: str,service_name: Optional[str] = None,hostname: Optional[str] = None): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def cert_store_rm_key(self,key_name: str,service_name: Optional[str] = None,hostname: Optional[str] = None): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def _prepare_host_for_sudo_hardening(self,host: str,cephadm_args: List[str],addr: Optional[str] = None): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def _prepare_hosts_for_sudo_hardening(self,host: str,cephadm_args: List[str],addr: Optional[str] = None): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def _prepare_host_and_enable_sudo_hardening(self,user: str,host_label: Optional[str] = None): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def cert_store_get_key(self,key_name: str,service_name: Optional[str] = None,hostname: Optional[str] = None,no_exception_when_missing: bool = False): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def _systemd_unit_ls(self,hostname: Optional[str] = None,daemon_type: Optional[str] = None,daemon_id: Optional[str] = None) : raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def _client_keyring_set(self,entity: str,placement: str,owner: Optional[str] = None,mode: Optional[str] = None,no_ceph_conf: bool = False): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def get_container_image(self,daemon_name: str,use_current_daemon_image: bool = False,force_ceph_image: bool = False): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    def _setup_user_on_host(self, host: str, user: str, ssh_pub_key: str, addr: Optional[str] = None) : raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+    
+
+
+#    def _preview_osdspecs(self,  osdspecs: Optional[List[DriveGroupSpec]] = None): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+#    def get_first_matching_network_ip(self,host: str,sspec: ServiceSpec,sspec_networks: Optional[List[str]] = None): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+#    def get_unique_name(self,daemon_type: str,host: str,existing: List[orchestrator.DaemonDescription],prefix: Optional[str] = None,forcename: Optional[str] = None,rank: Optional[int] = None,rank_generation: Optional[int] = None): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+#    def _is_adding_nvmeof_group_to_existing_service(self, nvmeof_spec: NvmeofServiceSpec): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+#    def _plan(self, spec: ServiceSpec): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+#    def plan(self, specs: Sequence[GenericSpec]): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+#    def _check_cert_source(self, spec: ServiceSpec): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+#    def _trigger_preview_refresh(self, specs: Optional[List[DriveGroupSpec]] service_name: Optional[str] = None,): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+#    def apply_drivegroups(self, specs: List[DriveGroupSpec]): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+#    def device_selection_from_explicit_paths(sel: Optional[DeviceSelection]): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+#    def create_osd_default_spec(self, drive_group: DriveGroupSpec): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+#    def is_path_lists_only(drive_group: DriveGroupSpec): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+#    def validate_device(self, host_name: str, drive_group: DriveGroupSpec): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+#    def _rotate_daemon_key(self, daemon_spec: CephadmDaemonDeploySpec): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+#    def _mon_public_network_changed(self, daemon_spec: CephadmDaemonDeploySpec): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+#    def _apply(self, spec: GenericSpec): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+#    def _get_candidate_hosts(self, placement: PlacementSpec): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+#    def _validate_tunedprofile_settings(self, spec: TunedProfileSpec): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+#    def _validate_tuned_profile_spec(self, spec: TunedProfileSpec): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+#    def _config_checks_list(self, format: Format = Format.plain): raise orchestrator.OrchestratorError("Proxmox: Use PVE GUI")
+
+
+
+
+    def inner(func: Callable) -> Callable:        
+def wrapper(*args: Any, **kwargs: Any) -> Any:
+
+
+    def _init_cert_mgr(self) -> None:
+    def _get_mgmt_gw_endpoint(self, is_internal: bool) -> Optional[str]:    
+        def get_mgmt_gw_internal_endpoint(self) -> Optional[str]:
+        def _kick_serve_loop(self) -> None:    
+        def serve(self) -> None:
+    def resume(self) -> None:
+    def validate_ssh_config_content(self, ssh_config: Optional[str]) -> None:
+    def update_watched_hosts(self) -> None:    
+        def offline_hosts_remove(self, host: str) -> None:    
+        def update_failed_daemon_health_check(self) -> None:
+    def can_run() -> Tuple[bool, str]:
+    def _setup_user_on_all_hosts(self, user: str) -> None:        
+        def setup_user_on_host(host: str) -> Tuple[str, Optional[str]]:    
+        def _validate_and_set_ssh_val(self, what: str, new: Optional[str], old: Optional[str]) -> None:    
+        def _set_ssh_config(self, inbuf: Optional[str] = None) -> Tuple[int, str, str]:    
+        def _clear_ssh_config(self) -> Tuple[int, str, str]:    
+        def _get_ssh_config(self) -> HandleCommandResult:
+    def _set_priv_key(self, inbuf: Optional[str] = None) -> Tuple[int, str, str]:
+    def _set_signed_cert(self, inbuf: Optional[str] = None) -> Tuple[int, str, str]:    
+        def _clear_key(self) -> Tuple[int, str, str]:
+
+    def _config_check_status(self) -> HandleCommandResult:    
+        def _config_check_enable(self, check_name: str) -> HandleCommandResult:    
+        def _config_check_disable(self, check_name: str) -> HandleCommandResult:
+    def extra_ceph_conf_is_newer(self, dt: datetime.datetime) -> bool:
+    def run(h: str) -> str:
+    def systemd_unit_ls(    
+        def _client_keyring_ls(self, format: Format = Format.plain) -> HandleCommandResult:
+    
+        def _client_keyring_rm(
+    def _check_valid_addr(self, host: str, addr: str) -> str:
+    def _add_host(self, spec):
+    def node_proxy_summary(self, hostname: Optional[str] = None) -> Dict[str, Any]:    
+def node_proxy_firmware(self, hostname: Optional[str] = None) -> Dict[str, Any]:    
+def node_proxy_firmwares(self, hostname: Optional[str] = None) -> Dict[str, Any]:    
+def node_proxy_criticals(self, hostname: Optional[str] = None) -> Dict[str, Any]:    
+def node_proxy_common(self, category: str, hostname: Optional[str] = None) -> Dict[str, Any]:    
+def remove_host(self, host: str, force: bool = False, offline: bool = False, rm_crush_entry: bool = False) -> str:
+    def get_hosts(self):
+    def exit_host_maintenance(self, hostname: str, force: bool = False, offline: bool = False) -> str:
+    def get_minimal_ceph_conf(self) -> str:    
+def _combine_confs(self, conf1: str, conf2: str) -> str:    
+def _invalidate_daemons_and_kick_serve(self, filter_host: Optional[str] = None) -> None:    
+def _invalidate_all_host_metadata_and_kick_serve(self, hostname: str) -> None:    
+def describe_service(self, service_type: Optional[str] = None, service_name: Optional[str] = None,
+    def service_action(self, action: str, service_name: str) -> List[str]:
+    def _daemon_action(self,
+    def remove_daemons(self,
+    def get_inventory(self, host_filter: Optional[orchestrator.InventoryFilter] = None, refresh: bool = False) -> List[orchestrator.InventoryHost]:
+    def blink_device_light(self, ident_fault: str, on: bool, locs: List[orchestrator.DeviceLightLoc]) -> List[str]:        
+        def blink(host: str, dev: str, path: str) -> str:    
+        def get_osd_uuid_map(self, only_up=False):    
+        def get_osd_by_id(self, osd_id: int) -> Optional[Dict[str, Any]]:
+    def path_list_only(sel: Optional[DeviceSelection]) -> bool:    
+        def validate_no_empty_device_paths(drive_group: DriveGroupSpec) -> str:
+    def validate_device(self, host_name: str, drive_group: DriveGroupSpec) -> str:    
+        def create_osds(self, drive_group: DriveGroupSpec, skip_validation: bool = False) -> str:
+    def _remove_daemons(self, name: str, host: str, force_delete_data: bool = False) -> str:
+    def _add_daemon(self,    
+                    def _create_daemons(self,        
+                                        def create_func_map(*args: Any) -> str:    
+        def add_daemon(self, spec: ServiceSpec) -> List[str]:
+    def _get_prometheus_credentials(self) -> Tuple[str, str]:
+    def set_custom_prometheus_alerts(self, alerts_file: str) -> str:    
+        def set_prometheus_target(self, url: str) -> str:    
+        def remove_prometheus_target(self, url: str) -> str:    
+        def set_prometheus_remote_write(self, url: str, remote_write_allowed_metrics: List[str]) -> str:
+    def set_alertmanager_access_info(self, user: str, password: str) -> str:    
+        def get_prometheus_access_info(self) -> Dict[str, str]:    
+        def get_security_config(self) -> Dict[str, bool]:    
+        def get_alertmanager_access_info(self) -> Dict[str, str]:    
+        def cert_store_cert_ls(self,
+    def cert_store_reload(self) -> str:
+    def cert_store_key_ls(self, include_cephadm_generated_keys: bool = False) -> Dict[str, Any]:    
+        def get_nvmeof_tls_bundle(self, service_name: str, daemon_name: str) -> Dict[str, str]:    
+        def cert_store_get_cert(
+    def _raise_non_editable_cert_error(self, cert_name: str, consumer: str, service_name: str, hostname: str) -> None:
+    def _validate_one_shot_placement_spec(self, spec: PlacementSpec) -> None:
+    def apply_tuned_profiles(self, specs: List[TunedProfileSpec], no_overwrite: bool = False) -> str:
+    def tuned_profile_add_setting(self, profile_name: str, setting: str, value: str) -> str:
+    def tuned_profile_rm_settings(self, profile_name: str, settings: List[str]) -> str:
+    def set_health_warning(self, name: str, summary: str, count: int, detail: List[str]) -> None:
+    def _apply_service_spec(self, spec: ServiceSpec) -> str: 
+    def apply_mgr(self, spec: ServiceSpec) -> str:    
+        def apply_mds(self, spec: ServiceSpec) -> str:    
+        def apply_rgw(self, spec: ServiceSpec) -> str:    
+        def apply_ingress(self, spec: ServiceSpec) -> str:    
+        def apply_iscsi(self, spec: ServiceSpec) -> str:    
+        def apply_rbd_mirror(self, spec: ServiceSpec) -> str:    
+        def apply_nfs(self, spec: ServiceSpec) -> str:
+    def apply_prometheus(self, spec: ServiceSpec) -> str:    
+        def apply_loki(self, spec: ServiceSpec) -> str:    
+        def apply_promtail(self, spec: ServiceSpec) -> str:    
+        def apply_alloy(self, spec: ServiceSpec) -> str:    
+        def apply_node_exporter(self, spec: ServiceSpec) -> str:    
+        def apply_ceph_exporter(self, spec: ServiceSpec) -> str:    
+        def apply_crash(self, spec: ServiceSpec) -> str:    
+        def apply_grafana(self, spec: ServiceSpec) -> str:    
+        def apply_alertmanager(self, spec: ServiceSpec) -> str:    
+        def apply_container(self, spec: ServiceSpec) -> str:    
+        def apply_snmp_gateway(self, spec: ServiceSpec) -> str:    
+        def apply_smb(self, spec: ServiceSpec) -> str:    
+        def apply_mgmt_gateway(self, spec: ServiceSpec) -> str:    
+        def apply_oauth2_proxy(self, spec: ServiceSpec) -> str:    
+        def set_unmanaged(self, service_name: str, value: bool) -> str:    
+        def upgrade_check(self, image: str, version: str) -> str:
+    def upgrade_ls(self, image: Optional[str], tags: bool, show_all_versions: Optional[bool]) -> Dict[Any, Any]:    
+        def upgrade_start(self, image: str, version: str, daemon_types: Optional[List[str]] = None, host_placement: Optional[str] = None,
+    def upgrade_resume(self) -> str:    
+        def upgrade_stop(self) -> str:    
+        def update_service(self, service_type: str, service_image: str, image: str) -> List[str]:    
+        def replace_device(self,
+    def remove_osds_status(self) -> List[Dict[str, Any]]:
+    def stop_drain_host(self, hostname: str) -> str:    
+        def trigger_connect_dashboard_rgw(self) -> None:
