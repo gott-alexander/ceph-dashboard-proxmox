@@ -1194,73 +1194,69 @@ class ProxmoxOrchestrator(MgrModule, orchestrator.Orchestrator):
 
 
     def inner(func: Callable) -> Callable:        
-def wrapper(*args: Any, **kwargs: Any) -> Any:
-
-
+    def wrapper(*args: Any, **kwargs: Any) -> Any:
     def _init_cert_mgr(self) -> None:
     def _get_mgmt_gw_endpoint(self, is_internal: bool) -> Optional[str]:    
-        def get_mgmt_gw_internal_endpoint(self) -> Optional[str]:
-        def _kick_serve_loop(self) -> None:    
+    def get_mgmt_gw_internal_endpoint(self) -> Optional[str]:
+    def _kick_serve_loop(self) -> None:    
     def resume(self) -> None:
     def validate_ssh_config_content(self, ssh_config: Optional[str]) -> None:
     def update_watched_hosts(self) -> None:    
-        def offline_hosts_remove(self, host: str) -> None:    
-        def update_failed_daemon_health_check(self) -> None:
+    def offline_hosts_remove(self, host: str) -> None:    
+    def update_failed_daemon_health_check(self) -> None:
     def _setup_user_on_all_hosts(self, user: str) -> None:        
-        def setup_user_on_host(host: str) -> Tuple[str, Optional[str]]:    
-        def _validate_and_set_ssh_val(self, what: str, new: Optional[str], old: Optional[str]) -> None:    
-        def _set_ssh_config(self, inbuf: Optional[str] = None) -> Tuple[int, str, str]:    
-        def _clear_ssh_config(self) -> Tuple[int, str, str]:    
-        def _get_ssh_config(self) -> HandleCommandResult:
+    def setup_user_on_host(host: str) -> Tuple[str, Optional[str]]:    
+    def _validate_and_set_ssh_val(self, what: str, new: Optional[str], old: Optional[str]) -> None:    
+    def _set_ssh_config(self, inbuf: Optional[str] = None) -> Tuple[int, str, str]:    
+    def _clear_ssh_config(self) -> Tuple[int, str, str]:    
+    def _get_ssh_config(self) -> HandleCommandResult:
     def _set_priv_key(self, inbuf: Optional[str] = None) -> Tuple[int, str, str]:
     def _set_signed_cert(self, inbuf: Optional[str] = None) -> Tuple[int, str, str]:    
-        def _clear_key(self) -> Tuple[int, str, str]:
-
+    def _clear_key(self) -> Tuple[int, str, str]:
     def _config_check_status(self) -> HandleCommandResult:    
-        def _config_check_enable(self, check_name: str) -> HandleCommandResult:    
-        def _config_check_disable(self, check_name: str) -> HandleCommandResult:
+    def _config_check_enable(self, check_name: str) -> HandleCommandResult:    
+    def _config_check_disable(self, check_name: str) -> HandleCommandResult:
     def extra_ceph_conf_is_newer(self, dt: datetime.datetime) -> bool:
     def run(h: str) -> str:
     def systemd_unit_ls(    
-        def _client_keyring_ls(self, format: Format = Format.plain) -> HandleCommandResult:
-    
-        def _client_keyring_rm(
+    def _client_keyring_ls(self, format: Format = Format.plain) -> HandleCommandResult:
+    def _client_keyring_rm(
     def _check_valid_addr(self, host: str, addr: str) -> str:
     def _add_host(self, spec):
     def node_proxy_summary(self, hostname: Optional[str] = None) -> Dict[str, Any]:    
-def node_proxy_firmware(self, hostname: Optional[str] = None) -> Dict[str, Any]:    
-def node_proxy_firmwares(self, hostname: Optional[str] = None) -> Dict[str, Any]:    
-def node_proxy_criticals(self, hostname: Optional[str] = None) -> Dict[str, Any]:    
-def node_proxy_common(self, category: str, hostname: Optional[str] = None) -> Dict[str, Any]:    
+    def node_proxy_firmware(self, hostname: Optional[str] = None) -> Dict[str, Any]:    
+    def node_proxy_firmwares(self, hostname: Optional[str] = None) -> Dict[str, Any]:    
+    def node_proxy_criticals(self, hostname: Optional[str] = None) -> Dict[str, Any]:    
+    def node_proxy_common(self, category: str, hostname: Optional[str] = None) -> Dict[str, Any]:    
     def get_minimal_ceph_conf(self) -> str:    
-def _combine_confs(self, conf1: str, conf2: str) -> str:    
-def _invalidate_daemons_and_kick_serve(self, filter_host: Optional[str] = None) -> None:    
-def _invalidate_all_host_metadata_and_kick_serve(self, hostname: str) -> None:    
+    def _combine_confs(self, conf1: str, conf2: str) -> str:    
+    def _invalidate_daemons_and_kick_serve(self, filter_host: Optional[str] = None) -> None:    
+    def _invalidate_all_host_metadata_and_kick_serve(self, hostname: str) -> None:    
     def service_action(self, action: str, service_name: str) -> List[str]:
     def _daemon_action(self,
-        def blink(host: str, dev: str, path: str) -> str:    
-        def get_osd_uuid_map(self, only_up=False):    
-        def get_osd_by_id(self, osd_id: int) -> Optional[Dict[str, Any]]:
+    def blink(host: str, dev: str, path: str) -> str:    
+    def get_osd_uuid_map(self, only_up=False):    
+    def get_osd_by_id(self, osd_id: int) -> Optional[Dict[str, Any]]:
     def path_list_only(sel: Optional[DeviceSelection]) -> bool:    
-        def validate_no_empty_device_paths(drive_group: DriveGroupSpec) -> str:
+    def validate_no_empty_device_paths(drive_group: DriveGroupSpec) -> str:
     def _remove_daemons(self, name: str, host: str, force_delete_data: bool = False) -> str:
     def _add_daemon(self,    
-                    def _create_daemons(self,        
-                                        def create_func_map(*args: Any) -> str:    
-        def add_daemon(self, spec: ServiceSpec) -> List[str]:
+    def _create_daemons(self,        
+    def create_func_map(*args: Any) -> str:    
+    def add_daemon(self, spec: ServiceSpec) -> List[str]:
     def _get_prometheus_credentials(self) -> Tuple[str, str]:
     def set_custom_prometheus_alerts(self, alerts_file: str) -> str:    
-        def set_prometheus_target(self, url: str) -> str:    
-        def remove_prometheus_target(self, url: str) -> str:    
-        def set_prometheus_remote_write(self, url: str, remote_write_allowed_metrics: List[str]) -> str:
+    def set_prometheus_target(self, url: str) -> str:    
+    def remove_prometheus_target(self, url: str) -> str:    
+    def set_prometheus_remote_write(self, url: str, remote_write_allowed_metrics: List[str]) -> str:
     def set_alertmanager_access_info(self, user: str, password: str) -> str:    
-        def get_prometheus_access_info(self) -> Dict[str, str]:    
-        def get_alertmanager_access_info(self) -> Dict[str, str]:    
-        def cert_store_cert_ls(self,
+    def get_prometheus_access_info(self) -> Dict[str, str]:    
+    def get_alertmanager_access_info(self) -> Dict[str, str]:    
+    def cert_store_cert_ls(self,
     def cert_store_reload(self) -> str:
     def cert_store_key_ls(self, include_cephadm_generated_keys: bool = False) -> Dict[str, Any]:    
-        def get_nvmeof_tls_bundle(self, service_name: str, daemon_name: str) -> Dict[str, str]:    
-        def cert_store_get_cert(
+    def get_nvmeof_tls_bundle(self, service_name: str, daemon_name: str) -> Dict[str, str]:    
+    def cert_store_get_cert(
     def _raise_non_editable_cert_error(self, cert_name: str, consumer: str, service_name: str, hostname: str) -> None:
     def _validate_one_shot_placement_spec(self, spec: PlacementSpec) -> None:
     def apply_tuned_profiles(self, specs: List[TunedProfileSpec], no_overwrite: bool = False) -> str:
@@ -1268,22 +1264,22 @@ def _invalidate_all_host_metadata_and_kick_serve(self, hostname: str) -> None:
     def tuned_profile_rm_settings(self, profile_name: str, settings: List[str]) -> str:
     def set_health_warning(self, name: str, summary: str, count: int, detail: List[str]) -> None:
     def _apply_service_spec(self, spec: ServiceSpec) -> str: 
-        def apply_ingress(self, spec: ServiceSpec) -> str:    
-        def apply_iscsi(self, spec: ServiceSpec) -> str:    
-        def apply_alloy(self, spec: ServiceSpec) -> str:    
+    def apply_ingress(self, spec: ServiceSpec) -> str:    
+    def apply_iscsi(self, spec: ServiceSpec) -> str:    
+    def apply_alloy(self, spec: ServiceSpec) -> str:    
+    def apply_ceph_exporter(self, spec: ServiceSpec) -> str:    
+    def apply_smb(self, spec: ServiceSpec) -> str:    
+    def apply_mgmt_gateway(self, spec: ServiceSpec) -> str:    
+    def apply_oauth2_proxy(self, spec: ServiceSpec) -> str:    
+    def upgrade_check(self, image: str, version: str) -> str:
+    def update_service(self, service_type: str, service_image: str, image: str) -> List[str]:    
+    def replace_device(self,
+    def remove_osds_status(self) -> List[Dict[str, Any]]:
+    def stop_drain_host(self, hostname: str) -> str:    
+    def trigger_connect_dashboard_rgw(self) -> None:
 
             
         def apply_node_exporter(self, spec: ServiceSpec) -> str:   
         def apply_node_exporter(self, spec): raise orchestrator.OrchestratorError("Proxmox: Not supported") 
 
         
-        def apply_ceph_exporter(self, spec: ServiceSpec) -> str:    
-        def apply_smb(self, spec: ServiceSpec) -> str:    
-        def apply_mgmt_gateway(self, spec: ServiceSpec) -> str:    
-        def apply_oauth2_proxy(self, spec: ServiceSpec) -> str:    
-        def upgrade_check(self, image: str, version: str) -> str:
-        def update_service(self, service_type: str, service_image: str, image: str) -> List[str]:    
-        def replace_device(self,
-    def remove_osds_status(self) -> List[Dict[str, Any]]:
-    def stop_drain_host(self, hostname: str) -> str:    
-        def trigger_connect_dashboard_rgw(self) -> None:
