@@ -7,7 +7,7 @@ on:
 
 env:
   PACKAGE_NAME: cephprox
-  VERSION_NUMMER: "1.0.3"
+  VERSION_NUMMER: "1.0.4"
   MAINTAINER: "Alexander Gott <github@gott-alexander.eu>"
 
 # Berechtigungen für GitHub Pages und Releases
