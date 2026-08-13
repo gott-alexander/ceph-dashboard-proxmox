@@ -159,6 +159,16 @@ jobs:
           PROMCONF
           fi
 
+          prometheus_override="/etc/systemd/system/prometheus-alertmanager.service.d/override.conf"
+          if [ -f "$prometheus_override" ]; then
+            mkdir /etc/systemd/system/prometheus-alertmanager.service.d/
+            sudo tee /etc/systemd/system/prometheus-alertmanager.service.d/override.conf > /dev/null << 'EOFZWEI'
+            [Unit]
+            Wants=network-online.target
+            After=network-online.target
+            EOFZWEI
+          fi
+
           FILE="/usr/share/ceph/mgr/orchestrator/module.py"
           if ! grep -q "'proxmox'" "$FILE"; then
             sed -i.bak -E "s/enum_allowed\s*=\s*\['cephadm',\s*'rook',\s*'test_orchestrator'\],/enum_allowed=['cephadm', 'rook', 'test_orchestrator', 'proxmox'],/" "$FILE"
