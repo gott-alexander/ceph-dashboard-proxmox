@@ -164,9 +164,9 @@ jobs:
           if [ ! -f "$prometheus_override" ]; then
             mkdir -p /etc/systemd/system/prometheus-alertmanager.service.d/
             sudo tee /etc/systemd/system/prometheus-alertmanager.service.d/override.conf > /dev/null << 'EOFZWEI'
-            [Unit]
-            Wants=network-online.target
-            After=network-online.target
+          [Unit]
+          Wants=network-online.target
+          After=network-online.target
           EOFZWEI
             sudo systemctl daemon-reload
           fi
