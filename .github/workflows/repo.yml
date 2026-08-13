@@ -157,6 +157,7 @@ jobs:
               static_configs:
                 - targets: ['127.0.0.1:9283']
           PROMCONF
+            systemctl restart prometheus
           fi
 
           prometheus_override="/etc/systemd/system/prometheus-alertmanager.service.d/override.conf"
@@ -166,7 +167,8 @@ jobs:
             [Unit]
             Wants=network-online.target
             After=network-online.target
-            EOFZWEI
+          EOFZWEI
+            sudo systemctl daemon-reload
           fi
 
           FILE="/usr/share/ceph/mgr/orchestrator/module.py"
